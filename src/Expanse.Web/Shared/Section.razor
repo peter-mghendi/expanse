@@ -1,0 +1,44 @@
+<div class="mb-8">
+    <div class="d-flex flex-row mb-4">
+
+        <MudText Typo="Typo.h4">
+            <span>
+                <MudIcon Icon="@Icon"></MudIcon>
+                @Title
+            </span>
+        </MudText>
+        <MudSpacer/>
+        <MudButton Variant="Variant.Text" EndIcon="@Icons.TwoTone.ChevronRight">See More</MudButton>
+    </div>
+
+    <MudGrid>
+        @for (var i = 0; i < 4; i++)
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudCard>
+                    <MudCardMedia Image="@($"https://picsum.photos/200?{_random.Next()}")" Height="200"/>
+                    <MudCardContent>
+                        <MudText Typo="Typo.h5">Old Paint</MudText>
+                        <MudText Typo="Typo.body2">Old paint found on a stone house door.</MudText>
+                        <MudText Typo="Typo.body2">This photo was taken in a small village in Istra Croatia.</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">Share</MudButton>
+                        <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+</div>
+
+@code {
+    private readonly Random _random = new();
+
+    [Parameter]
+    public string Title { get; set; } = null!;
+
+    [Parameter]
+    public string Icon { get; set; } = null!;
+
+}

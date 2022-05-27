@@ -1,7 +1,26 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Home | Expanse</PageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
-<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor!</MudText>
-<MudAlert Severity="Severity.Normal">You can find documentation and examples on our website here: <MudLink Href="https://mudblazor.com" Typo="Typo.body2" Color="Color.Inherit"><b>www.mudblazor.com</b></MudLink></MudAlert>
+<div class="d-flex flex-column align-center mb-8">
+    <MudIcon Icon="@Icons.TwoTone.SatelliteAlt" Size="Size.Large"/>
+    <MudText Typo="Typo.h2" Align="Align.Center">Expanse</MudText>
+    <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">Some profound text here.</MudText>
+
+    <MudContainer MaxWidth="MaxWidth.Medium" Class="mb-4">
+        <MudTextField @bind-Value="_query" Label="Search" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.TwoTone.Search" AdornmentColor="Color.Primary" Class="mud-width-full"/>
+    </MudContainer>
+</div>
+
+<Section Title="Rockets" Icon="@Icons.TwoTone.Rocket"></Section>
+
+<Section Title="Launches" Icon="@Icons.TwoTone.RocketLaunch"></Section>
+
+<Section Title="Missions" Icon="@Icons.TwoTone.Task"></Section>
+
+<Section Title="Ships" Icon="@Icons.TwoTone.DirectionsBoat"></Section>
+
+@code
+{
+    private string? _query;
+}
