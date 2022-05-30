@@ -1,4 +1,7 @@
-﻿@page "/"
+﻿@page "/"   
+@using Expanse.Web.Extensions.Models
+@using Expanse.Web.Models
+@inject SpaceXClient SpaceXClient
 
 <PageTitle>Home | Expanse</PageTitle>
 
@@ -8,19 +11,49 @@
     <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">Some profound text here.</MudText>
 
     <MudContainer MaxWidth="MaxWidth.Medium" Class="mb-4">
-        <MudTextField @bind-Value="_query" Label="Search" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.TwoTone.Search" AdornmentColor="Color.Primary" Class="mud-width-full"/>
+        <MudTextField @bind-Value="_query" Label="Search" Variant="Variant.Outlined" Adornment="Adornment.End"
+                      AdornmentIcon="@Icons.TwoTone.Search" AdornmentColor="Color.Primary" Class="mud-width-full"/>
     </MudContainer>
 </div>
 
-<Section Title="Rockets" Icon="@Icons.TwoTone.Rocket"></Section>
+<Section Title="Rockets" Icon="@Icons.TwoTone.Rocket">
+    <Template>
+        @foreach (var rocket in _model.Rockets)
+        {
+            <RocketItem Rocket="rocket"></RocketItem>
+        }
+    </Template>
+</Section>
 
-<Section Title="Launches" Icon="@Icons.TwoTone.RocketLaunch"></Section>
-
-<Section Title="Missions" Icon="@Icons.TwoTone.Task"></Section>
-
-<Section Title="Ships" Icon="@Icons.TwoTone.DirectionsBoat"></Section>
+@* <Section Title="Launches" Icon="@Icons.TwoTone.RocketLaunch"></Section> *@
+@* *@
+@* <Section Title="Missions" Icon="@Icons.TwoTone.Task"></Section> *@
+@* *@
+@* <Section Title="Ships" Icon="@Icons.TwoTone.DirectionsBoat"></Section> *@
 
 @code
 {
     private string? _query;
+
+    private Model _model = new();
+
+    protected override void OnInitialized()
+    {
+        _ = SpaceXClient.GetHomePageOverview.Watch(ExecutionStrategy.CacheFirst)
+            .Where(result => !result.Errors.Any())
+            .Select(result => result.Data)
+            .Subscribe(data =>
+            {
+                _model = new Model
+                {
+                    Rockets = data?.Rockets?.Select(entity => entity.ToRocket()).ToList()!
+                };
+                StateHasChanged();
+            });
+    }
+
+    public class Model
+    {
+        public List<Rocket> Rockets { get; init; } = new();
+    }
 }

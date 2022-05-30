@@ -1,0 +1,32 @@
+query GetHomePageOverview {
+    rockets(limit: 4) {
+        name
+        active
+        mass {
+            kg
+        }
+        first_flight
+    }
+    launchesPast(limit: 4) {
+        mission_name
+        launch_date_local
+        launch_site {
+            site_name_long
+        }
+        launch_success
+        links {
+            flickr_images
+        }
+    }
+    missions(limit: 4) {
+        name
+        description
+        twitter
+        wikipedia
+    }
+    ships(limit: 4) {
+        name
+        home_port
+        image
+    }
+}

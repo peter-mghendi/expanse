@@ -1,0 +1,28 @@
+@using Expanse.Web.Models
+<MudItem xs="12" sm="6" md="3">
+    <MudCard>
+        <MudCardContent>
+            <MudText Typo="Typo.h5" Class="mb-4">
+                <span class="d-flex flex-row align-center">
+                    @Rocket.Name
+                    <MudSpacer/>
+                    <MudChip Variant="Variant.Text" Color="@(Rocket.Active ? Color.Success : Color.Error)"
+                             Icon="@(Rocket.Active ? Icons.TwoTone.Check : Icons.TwoTone.Close)">
+                        @(Rocket.Active ? nameof(Rocket.Active) : "Inactive")
+                    </MudChip>
+                </span>
+            </MudText>
+            <MudText Typo="Typo.body2">Mass: @Rocket.Mass.ToString("N") kg</MudText>
+            <MudText Typo="Typo.body2">First flew on @Rocket.FirstFlight</MudText>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton Variant="Variant.Text" Color="Color.Primary">Share</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+        </MudCardActions>
+    </MudCard>
+</MudItem>
+
+@code {
+    [Parameter]
+    public Rocket Rocket { get; set; } = null!;
+}
