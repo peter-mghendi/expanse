@@ -1,0 +1,19 @@
+@using Expanse.Web.Models
+<MudItem xs="12" sm="6" md="3">
+    <MudCard>
+            <MudCardMedia Image="@Ship.Image" Height="200"/>
+            <MudCardContent>
+            <MudText Typo="Typo.h5" Class="mb-4">@Ship.Name</MudText>
+            <MudText Typo="Typo.body2">Home Port: @Ship.HomePort</MudText>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton Variant="Variant.Text" Color="Color.Primary">Share</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+        </MudCardActions>
+    </MudCard>
+</MudItem>
+
+@code {
+    [Parameter]
+    public Ship Ship { get; set; } = null!;
+}

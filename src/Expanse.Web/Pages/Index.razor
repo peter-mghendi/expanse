@@ -11,7 +11,7 @@
     <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">Some profound text here.</MudText>
 
     <MudContainer MaxWidth="MaxWidth.Medium" Class="mb-4">
-        <MudTextField @bind-Value="_query" Label="Search" Variant="Variant.Outlined" Adornment="Adornment.End"
+        <MudTextField @bind-Value="_query" Label="Search the Expanse" Variant="Variant.Outlined" Adornment="Adornment.End"
                       AdornmentIcon="@Icons.TwoTone.Search" AdornmentColor="Color.Primary" Class="mud-width-full"/>
     </MudContainer>
 </div>
@@ -20,16 +20,37 @@
     <Template>
         @foreach (var rocket in _model.Rockets)
         {
-            <RocketItem Rocket="rocket"></RocketItem>
+            <RocketItem Rocket="@rocket"></RocketItem>
         }
     </Template>
 </Section>
 
-@* <Section Title="Launches" Icon="@Icons.TwoTone.RocketLaunch"></Section> *@
-@* *@
-@* <Section Title="Missions" Icon="@Icons.TwoTone.Task"></Section> *@
-@* *@
-@* <Section Title="Ships" Icon="@Icons.TwoTone.DirectionsBoat"></Section> *@
+<Section Title="Launches" Icon="@Icons.TwoTone.RocketLaunch">
+    <Template>
+        @foreach (var launch in _model.Launches)
+        {
+            <LaunchItem Launch="@launch"></LaunchItem>
+        }
+    </Template>
+</Section>
+
+<Section Title="Missions" Icon="@Icons.TwoTone.Task">
+    <Template>
+            @foreach (var mission in _model.Missions)
+            {
+                <MissionItem Mission="@mission"></MissionItem>
+            }
+        </Template>
+</Section>
+
+<Section Title="Ships" Icon="@Icons.TwoTone.DirectionsBoat">
+     <Template>
+                @foreach (var ship in _model.Ships)
+                {
+                    <ShipItem Ship="@ship"></ShipItem>
+                }
+            </Template>
+</Section>
 
 @code
 {
@@ -44,9 +65,12 @@
             .Select(result => result.Data)
             .Subscribe(data =>
             {
-                _model = new Model
+                 _model = new Model
                 {
-                    Rockets = data?.Rockets?.Select(entity => entity.ToRocket()).ToList()!
+                    Rockets = from entity in data?.Rockets select entity.ToRocket(),
+                    Launches = from entity in data?.LaunchesPast select entity.ToLaunch(),
+                    Missions = from entity in data?.Missions select entity.ToMission(),
+                    Ships = from entity in data?.Ships select entity.ToShip(),
                 };
                 StateHasChanged();
             });
@@ -54,6 +78,9 @@
 
     public class Model
     {
-        public List<Rocket> Rockets { get; init; } = new();
+        public IEnumerable<Rocket> Rockets { get; init; } = new List<Rocket>();
+        public IEnumerable<Launch> Launches { get; init; } = new List<Launch>();
+        public IEnumerable<Mission> Missions { get; init; } = new List<Mission>();
+        public IEnumerable<Ship> Ships { get; init; } = new List<Ship>();
     }
 }

@@ -7,7 +7,7 @@
 <MudLayout>
     <MudAppBar Elevation="0" Color="Color.Transparent" Fixed="false">
         <MudSpacer/>
-        <MudIconButton Icon="@DarkModeIcon" Color="DarkModeIconColor" Edge="Edge.Start" OnClick="@((e) => DarkModeToggle())"/>
+        <MudIconButton Icon="@DarkModeIcon" Color="DarkModeIconColor" Edge="Edge.Start" OnClick="@((e) => ToggleDarkMode())"/>
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/sixpeteunder/expanse" Target="_blank"/>
     </MudAppBar>
     <MudMainContent>
@@ -23,8 +23,11 @@
 </MudLayout>
 
 @code {
-    bool _dark;
+    private bool _dark;
+    
     private string DarkModeIcon => _dark ? Icons.Outlined.LightMode : Icons.Filled.DarkMode;
+
     private Color DarkModeIconColor => _dark ? Color.Warning : Color.Inherit;
-    void DarkModeToggle() => _dark = !_dark;
+    
+    void ToggleDarkMode() => _dark = !_dark;
 }

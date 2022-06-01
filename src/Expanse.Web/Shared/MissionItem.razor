@@ -1,0 +1,25 @@
+@using Expanse.Web.Models
+<MudItem xs="12" sm="6" md="3">
+    <MudCard>
+        <MudCardContent>
+            <MudText Typo="Typo.h5" Class="mb-4">@Mission.Name</MudText>
+            <MudText Typo="Typo.body2" Class="clamp clamp-5">@Mission.Description</MudText>
+
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton Link="@Mission.Twitter" Target="_blank" Variant="Variant.Text" Color="Color.Info">
+                Twitter
+            </MudButton>
+            <MudButton Link="@Mission.Wikipedia" Target="_blank" Variant="Variant.Text">
+                Wikipedia
+            </MudButton>
+        </MudCardActions>
+    </MudCard>
+</MudItem>
+
+@code { 
+
+    [Parameter]
+    public Mission Mission { get; set; } = null!;
+
+}
