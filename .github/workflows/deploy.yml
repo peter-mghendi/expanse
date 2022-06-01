@@ -3,7 +3,7 @@ name: Deploy
 env:
   # UPGRADE: Change version here when upgrading 
   PUBLISH_DIR: src/Expanse.Web/bin/Release/net6.0/publish/wwwroot
-  CONTENT_BASE: /Expanse/
+  CONTENT_BASE: /expanse/
 
 on:
   push:
