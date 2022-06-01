@@ -1,13 +1,15 @@
-﻿@inherits LayoutComponentBase
+﻿@using Blazored.LocalStorage
+@inherits LayoutComponentBase
+@inject ILocalStorageService LocalStorage
 
-<MudThemeProvider IsDarkMode="_dark"/>
+<MudThemeProvider @ref="_provider" IsDarkMode="_dark"/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
 <MudLayout>
     <MudAppBar Elevation="0" Color="Color.Transparent" Fixed="false">
         <MudSpacer/>
-        <MudIconButton Icon="@DarkModeIcon" Color="DarkModeIconColor" Edge="Edge.Start" OnClick="@((e) => ToggleDarkMode())"/>
+        <MudIconButton Icon="@DarkModeIcon" Color="DarkModeIconColor" Edge="Edge.Start" OnClick="ToggleDarkMode" />
         <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/sixpeteunder/expanse" Target="_blank"/>
     </MudAppBar>
     <MudMainContent>
@@ -24,10 +26,27 @@
 
 @code {
     private bool _dark;
+    private MudThemeProvider _provider = null!;
+    
+    private const string DarkModeKey = "dark";
     
     private string DarkModeIcon => _dark ? Icons.Outlined.LightMode : Icons.Filled.DarkMode;
 
     private Color DarkModeIconColor => _dark ? Color.Warning : Color.Inherit;
     
-    void ToggleDarkMode() => _dark = !_dark;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _dark = await LocalStorage.GetItemAsync<bool?>(DarkModeKey) ?? await _provider.GetSystemPreference();
+            StateHasChanged();
+        }
+    }
+    
+    async Task ToggleDarkMode()
+    {
+        _dark = !_dark;
+        await LocalStorage.SetItemAsync(DarkModeKey, _dark);
+    }
+
 }
