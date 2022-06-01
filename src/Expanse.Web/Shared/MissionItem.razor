@@ -6,12 +6,18 @@
             <MudText Typo="Typo.body2" Class="clamp clamp-5">@Mission.Description</MudText>
         </MudCardContent>
         <MudCardActions>
-            <MudButton Link="@Mission.Twitter" Target="_blank" Variant="Variant.Text" Color="Color.Info">
-                Twitter
-            </MudButton>
-            <MudButton Link="@Mission.Wikipedia" Target="_blank" Variant="Variant.Text">
-                Wikipedia
-            </MudButton>
+            @if (Mission.Twitter is not null)
+            {
+                <MudButton Link="@Mission.Twitter" Target="_blank" Variant="Variant.Text" Color="Color.Info">
+                    Twitter
+                </MudButton>
+            }
+            @if (Mission.Wikipedia is not null)
+            {
+                <MudButton Link="@Mission.Wikipedia" Target="_blank" Variant="Variant.Text">
+                    Wikipedia
+                </MudButton>
+            }
         </MudCardActions>
     </MudCard>
 </MudItem>

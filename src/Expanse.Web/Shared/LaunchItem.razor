@@ -10,17 +10,14 @@
             <MudCardMedia Image="assets/images/unavailable-image.jpg" Height="200"/>
         }
         <MudCardContent>
-            <MudText Typo="Typo.h5" Class="mb-4">
-                <span class="d-flex flex-row align-center">
-                    Mission: @Launch.MissionName
-                    <MudSpacer/>
-                    <MudChip Variant="Variant.Text" Color="@(Launch.Success ? Color.Success : Color.Error)"
-                             Icon="@(Launch.Success ? Icons.TwoTone.Check : Icons.TwoTone.Close)">
-                        @(Launch.Success ? nameof(Launch.Success) : "Failed")
-                    </MudChip>
-                </span>
-            </MudText>
-            <MudText Typo="Typo.body2">Launched on @Launch.Date from @Launch.Site</MudText>
+            <span class="d-flex flex-row justify-end mb-4">
+                <MudChip Variant="Variant.Text" Color="@(Launch.Success ? Color.Success : Color.Error)"
+                         Icon="@(Launch.Success ? Icons.TwoTone.Check : Icons.TwoTone.Close)">
+                    Launch @(Launch.Success ? "Successful" : "Unsuccessful")
+                </MudChip>
+            </span>
+            <MudText Typo="Typo.body2" Class="mb-4">Launched from @Launch.Site on @Launch.Date.ToLongDateString().</MudText>
+            <MudText Typo="Typo.body2">Mission: @Launch.MissionName</MudText>
         </MudCardContent>
         <MudCardActions>
             <MudButton Variant="Variant.Text" Color="Color.Primary">Share</MudButton>

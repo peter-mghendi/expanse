@@ -14,7 +14,7 @@ public static class RocketExtensions
             _ => new Rocket
             {
                 Active = entity.Active ?? false,
-                FirstFlight = entity.First_flight,
+                FirstFlight = (DateTime) entity.First_flight!,
                 Mass = entity.Mass?.Kg ?? 0,
                 Name = entity.Name ?? string.Empty
             }

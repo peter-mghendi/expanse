@@ -13,7 +13,7 @@
                 </span>
             </MudText>
             <MudText Typo="Typo.body2">Mass: @((Rocket.Mass / 1000).ToString("N")) T</MudText>
-            <MudText Typo="Typo.body2">First flew on @Rocket.FirstFlight</MudText>
+            <MudText Typo="Typo.body2">First flew on @(Rocket.FirstFlight.ToLongDateString())</MudText>
         </MudCardContent>
         <MudCardActions>
             <MudButton Variant="Variant.Text" Color="Color.Primary">Share</MudButton>
